@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.frankmoley.lil.learningspring.data.Guest;
@@ -58,6 +59,36 @@ public class HotelGuestService {
 		
 	}
 	
+	public HotelDataTransactionResult addGuest(HotelGuest hotelGuest) {
+		
+		Guest guest = new Guest();
+		guest.setFirstName(hotelGuest.getFirstName());
+		guest.setLastName(hotelGuest.getLastName());
+		guest.setEmailAddress(hotelGuest.getEmailAddress());
+		guest.setAddress(hotelGuest.getAddress());
+		guest.setCountry(hotelGuest.getCountry());
+		guest.setState(hotelGuest.getState());
+		guest.setPhoneNumber(hotelGuest.getPhoneNumber());
 	
+		try {
+			
+			guestRepository.save(guest);
+			
+			HotelDataTransactionResult transactionResult = new HotelDataTransactionResult();
+			transactionResult.setHotelDataTransferObject(hotelGuest);
+			transactionResult.setMessage("Guest: " + hotelGuest + " was added successfully!");
+			
+			return transactionResult;
+		
+		} catch (DataAccessException e) {
+			
+			HotelDataTransactionResult transactionResult = new HotelDataTransactionResult(); 
+			transactionResult.setE(e); 
+			transactionResult.setMessage("Error adding the guest to the database");
+			
+			return transactionResult;
+		}
+		
+	}	
 	
 }

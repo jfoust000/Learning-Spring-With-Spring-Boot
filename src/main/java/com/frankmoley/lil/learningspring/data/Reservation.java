@@ -14,7 +14,7 @@ import javax.persistence.Table;
 public class Reservation {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "RESERVATION_ID")
 	private long id;
 	
