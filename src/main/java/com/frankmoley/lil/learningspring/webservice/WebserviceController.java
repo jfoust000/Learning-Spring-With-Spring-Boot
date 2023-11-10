@@ -3,16 +3,21 @@ package com.frankmoley.lil.learningspring.webservice;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.frankmoley.lil.learningspring.business.HotelDataTransactionResult;
 import com.frankmoley.lil.learningspring.business.HotelGuest;
 import com.frankmoley.lil.learningspring.business.HotelGuestService;
+import com.frankmoley.lil.learningspring.business.HotelRoom;
+import com.frankmoley.lil.learningspring.business.HotelRoomService;
 import com.frankmoley.lil.learningspring.business.ReservationService;
 import com.frankmoley.lil.learningspring.business.RoomReservation;
 import com.frankmoley.lil.learningspring.util.DateUtils;
@@ -24,13 +29,16 @@ public class WebserviceController {
 	private final DateUtils dateUtils;
 	private final ReservationService reservationService;
 	private final HotelGuestService hotelGuestService;
+	private final HotelRoomService hotelRoomService;
 	
 	public WebserviceController(DateUtils dateUtils, ReservationService reservationService,
-			HotelGuestService hotelGuestService) {
+			HotelGuestService hotelGuestService,
+			HotelRoomService hotelRoomService) {
 	
 		this.dateUtils = dateUtils;
 		this.reservationService = reservationService;
 		this.hotelGuestService = hotelGuestService;
+		this.hotelRoomService = hotelRoomService;
 		
 	}
 	
@@ -42,7 +50,7 @@ public class WebserviceController {
 		
 	}
 	
-	@GetMapping("list-guests")
+	@GetMapping("/guests")
 	public List<HotelGuest> getGuests() {
 		
 		List<HotelGuest> hotelGuests = this.hotelGuestService.getAllGuests();
@@ -50,27 +58,19 @@ public class WebserviceController {
 		
 	}
 	
-	@PostMapping("add-guest")
-	public HotelDataTransactionResult addGuest(@RequestBody HotelGuest hotelGuest) {
-			
-		HotelDataTransactionResult transactionResult = new HotelDataTransactionResult();
+	@GetMapping("/rooms")
+	public List<HotelRoom> getRooms() {
 		
-			if (hotelGuest.getFirstName().equals(null) || hotelGuest.getLastName().equals(null)
-					|| hotelGuest.getEmailAddress().equals(null)
-					|| hotelGuest.getAddress().equals(null)
-					|| hotelGuest.getCountry().equals(null)
-					|| hotelGuest.getPhoneNumber().equals(null)) {
-				
-				transactionResult.setHotelDataTransferObject(hotelGuest);
-				transactionResult.setMessage("firstName, lastName, emailAddress, address, country, and phone number are required");
-				
-				return transactionResult;
-				
-			}
+		List<HotelRoom> hotelRooms = this.hotelRoomService.getAllRooms();
+		return hotelRooms;
+		
+	}
+	
+	@PostMapping("/guests")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void addGuest(@RequestBody HotelGuest hotelGuest) {
 			
-			transactionResult = hotelGuestService.addGuest(hotelGuest);
-			
-			return transactionResult;
+			hotelGuestService.addGuest(hotelGuest);
 		
 	}
 	

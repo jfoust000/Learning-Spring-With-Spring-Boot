@@ -2,6 +2,7 @@ package com.frankmoley.lil.learningspring.business;
 
 public class HotelGuest {
 	
+	private long guestId;
 	private String firstName;
 	private String lastName;
 	private String emailAddress;
@@ -10,6 +11,13 @@ public class HotelGuest {
 	private String state;
 	private String phoneNumber;
 	
+	
+	public long getGuestId() {
+		return guestId;
+	}
+	public void setGuestId(long guestId) {
+		this.guestId = guestId;
+	}
 	public String getFirstName() {
 		return firstName;
 	}

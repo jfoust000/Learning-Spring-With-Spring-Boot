@@ -30,10 +30,13 @@ public class HotelGuestService {
 		guests.forEach(guest -> {
 			
 			HotelGuest hotelGuest = new HotelGuest();
+			
+			hotelGuest.setGuestId(guest.getId());
 			hotelGuest.setLastName(guest.getLastName());
 			hotelGuest.setFirstName(guest.getFirstName());
 			hotelGuest.setEmailAddress(guest.getEmailAddress());
 			hotelGuest.setPhoneNumber(guest.getPhoneNumber());
+			
 			guestList.add(hotelGuest);
 			
 		});
@@ -59,9 +62,14 @@ public class HotelGuestService {
 		
 	}
 	
-	public HotelDataTransactionResult addGuest(HotelGuest hotelGuest) {
+	public void addGuest(HotelGuest hotelGuest) {
+		
+		if (hotelGuest == null) {
+			throw new RuntimeException("HotelGuest cannot be null");
+		}
 		
 		Guest guest = new Guest();
+	
 		guest.setFirstName(hotelGuest.getFirstName());
 		guest.setLastName(hotelGuest.getLastName());
 		guest.setEmailAddress(hotelGuest.getEmailAddress());
@@ -70,24 +78,7 @@ public class HotelGuestService {
 		guest.setState(hotelGuest.getState());
 		guest.setPhoneNumber(hotelGuest.getPhoneNumber());
 	
-		try {
-			
-			guestRepository.save(guest);
-			
-			HotelDataTransactionResult transactionResult = new HotelDataTransactionResult();
-			transactionResult.setHotelDataTransferObject(hotelGuest);
-			transactionResult.setMessage("Guest: " + hotelGuest + " was added successfully!");
-			
-			return transactionResult;
-		
-		} catch (DataAccessException e) {
-			
-			HotelDataTransactionResult transactionResult = new HotelDataTransactionResult(); 
-			transactionResult.setE(e); 
-			transactionResult.setMessage("Error adding the guest to the database");
-			
-			return transactionResult;
-		}
+		guestRepository.save(guest);
 		
 	}	
 	
