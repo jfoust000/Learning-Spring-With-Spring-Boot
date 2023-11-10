@@ -68,9 +68,10 @@ public class WebserviceController {
 	
 	@PostMapping("/guests")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void addGuest(@RequestBody HotelGuest hotelGuest) {
+	public HotelGuest addGuest(@RequestBody HotelGuest hotelGuest) {
 			
 			hotelGuestService.addGuest(hotelGuest);
+			return hotelGuest;
 		
 	}
 	
