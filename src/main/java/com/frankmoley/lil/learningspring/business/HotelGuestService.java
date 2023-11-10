@@ -62,7 +62,7 @@ public class HotelGuestService {
 		
 	}
 	
-	public void addGuest(HotelGuest hotelGuest) {
+	public HotelGuest createGuest(HotelGuest hotelGuest) {
 		
 		if (hotelGuest == null) {
 			throw new RuntimeException("HotelGuest cannot be null");
@@ -79,6 +79,10 @@ public class HotelGuestService {
 		guest.setPhoneNumber(hotelGuest.getPhoneNumber());
 	
 		guestRepository.save(guest);
+		
+		hotelGuest.setGuestId(guest.getId());
+		
+		return hotelGuest;
 		
 	}	
 	

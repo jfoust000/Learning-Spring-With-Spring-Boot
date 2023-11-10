@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.frankmoley.lil.learningspring.business.HotelDataTransactionResult;
 import com.frankmoley.lil.learningspring.business.HotelGuest;
 import com.frankmoley.lil.learningspring.business.HotelGuestService;
 import com.frankmoley.lil.learningspring.business.HotelRoom;
@@ -68,10 +66,10 @@ public class WebserviceController {
 	
 	@PostMapping("/guests")
 	@ResponseStatus(HttpStatus.CREATED)
-	public HotelGuest addGuest(@RequestBody HotelGuest hotelGuest) {
+	public HotelGuest createGuest(@RequestBody HotelGuest hotelGuest) {
 			
-			hotelGuestService.addGuest(hotelGuest);
-			return hotelGuest;
+		return hotelGuestService.createGuest(hotelGuest);
+			 
 		
 	}
 	
