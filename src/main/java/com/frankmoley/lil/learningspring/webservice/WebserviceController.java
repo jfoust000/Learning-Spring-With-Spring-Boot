@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.frankmoley.lil.learningspring.business.HotelGuest;
 import com.frankmoley.lil.learningspring.business.HotelGuestService;
 import com.frankmoley.lil.learningspring.business.HotelRoom;
@@ -50,17 +50,15 @@ public class WebserviceController {
 	
 	@GetMapping("/guests")
 	public List<HotelGuest> getGuests() {
-		
-		List<HotelGuest> hotelGuests = this.hotelGuestService.getAllGuests();
-		return hotelGuests;
-		
+
+		return this.hotelGuestService.getAllGuests();
+
 	}
 	
 	@GetMapping("/rooms")
 	public List<HotelRoom> getRooms() {
 		
-		List<HotelRoom> hotelRooms = this.hotelRoomService.getAllRooms();
-		return hotelRooms;
+		return this.hotelRoomService.getAllRooms();
 		
 	}
 	
@@ -69,7 +67,6 @@ public class WebserviceController {
 	public HotelGuest createGuest(@RequestBody HotelGuest hotelGuest) {
 			
 		return hotelGuestService.createGuest(hotelGuest);
-			 
 		
 	}
 	

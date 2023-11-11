@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.frankmoley.lil.learningspring.data.Guest;
@@ -35,6 +34,9 @@ public class HotelGuestService {
 			hotelGuest.setLastName(guest.getLastName());
 			hotelGuest.setFirstName(guest.getFirstName());
 			hotelGuest.setEmailAddress(guest.getEmailAddress());
+			hotelGuest.setAddress(guest.getAddress());
+			hotelGuest.setCountry(guest.getCountry());
+			hotelGuest.setState(guest.getState());
 			hotelGuest.setPhoneNumber(guest.getPhoneNumber());
 			
 			guestList.add(hotelGuest);
